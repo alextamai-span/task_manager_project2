@@ -29,7 +29,7 @@ function App() {
   }, [tasks]);
 
   // on submit 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     // validating task
@@ -72,17 +72,17 @@ function App() {
 
   };
 
-  const removeTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+  const removeTask = (id: any) => {
+    setTasks(tasks.filter((task: any) => task.id !== id));
   };
 
-  const toggleComplete = (id) => {
-    setTasks(tasks.map(task => 
+  const toggleComplete = (id: any) => {
+    setTasks(tasks.map((task: any) => 
       task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
     ));
   };
 
-  const startEdit = (task) => {
+  const startEdit = (task: any) => {
     setEditId(task.id);
     setTaskInput(task.title);
     setDescription(task.description);
@@ -146,7 +146,7 @@ function App() {
             </button>
         </form>
 
-        <ul id="task-list" className="tasks">{tasks.map(task => (
+        <ul id="task-list" className="tasks">{tasks.map((task: any) => (
           <li key={task.id} className={task.isCompleted ? 'completed-task' : ''}>
             <div className="task-info">
               <h3>{task.title}</h3>
