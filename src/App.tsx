@@ -1,3 +1,5 @@
+// imports
+// -------
 import React, { useState, useEffect } from 'react';
 import './App.css'
 
@@ -10,36 +12,50 @@ function App() {
   const [editId, setEditId] = useState(null);
 
   // storing a task in local storage
+  // -------------------------------
+  // useState: track the functions current state
   const [tasks, setTasks] = useState(() => {
     try {
+      // get the saved tasks from local storage
       const saved = localStorage.getItem('tasks');
+
+      // if there are saved tasks 
       if (saved && saved !== "undefined") {
+        // parse the JSON string from localStorage back into a JavaScript array of task objects.
         return JSON.parse(saved);
       }
     }
     catch (error) {
+      // if there is an error during parsing, log the error and return an empty array
       console.error("Failed to parse tasks from localStorage", error);
-      return [];
     }
+    return [];
   });
 
   // update task in local storage
+  // ----------------------------
+  // useEffect: side effects for elements/components, runs after any changes to tasks
   useEffect(() => {
+    // updating the tasks in local storage
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // on submit 
+  // on submit - add a task to the list 
+  // ----------------------------------
   const handleSubmit = (e: any) => {
+    // prevent automatic page refresh
     e.preventDefault();
 
     // validating task
     if(!taskInput.trim()) {
+      // empty task, alert the user and return
       alert('Please add an task!')
       return;
     }
 
     // validating category
     if (category === 'Select') {
+      // no category selected, alert the user and return
       alert('Please select a category!')
       return;
     }
@@ -47,12 +63,15 @@ function App() {
     // validating date
     const today = new Date().toISOString().split('T')[0];
     if (!deadline || deadline < today) {
+      // invalid date, alert the user and return
       alert('Please select a date in the future!');
       return;
     }
 
     // successful task
     const new_task = {
+        // adds a random unique id
+        // should be auto-incremented in a real application, but for simplicity we use random number here
         id: Math.floor(Math.random() * 10000000),
         title: taskInput,
         description: description,
@@ -69,31 +88,44 @@ function App() {
     setDescription('');
     setCategory('Select');
     setDeadline('');
-
   };
 
+  // remove a task from the list
+  // ---------------------------
   const removeTask = (id: any) => {
+    // filter out the task with the given id and update the tasks state
     setTasks(tasks.filter((task: any) => task.id !== id));
   };
 
+  // toggle task completion status
+  // -----------------------------
   const toggleComplete = (id: any) => {
+    // map through the tasks and toggle the isCompleted property of the task with the given id, then update the tasks state
     setTasks(tasks.map((task: any) => 
       task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
     ));
   };
 
+  // start editing a task
+  // --------------------
   const startEdit = (task: any) => {
+    // auto-fill the form with the task's current details for editing, set the editId to the task's id)
     setEditId(task.id);
     setTaskInput(task.title);
     setDescription(task.description);
     setCategory(task.category);
     setDeadline(task.deadline);
 
+    // remove the task from the list
     removeTask(task.id);
   };
 
+  // clear all tasks from the list
+  // -----------------------------
   const clearAll = () => {
+    // confirm with the user before clearing all tasks
     if (window.confirm("Are you sure you want to clear all tasks?")) {
+      // if confirmed, set tasks to an empty array
       setTasks([]);
     }
   };
@@ -101,10 +133,12 @@ function App() {
   return (
     <>
       <div>
+        {/* header for the app */}
         <header>
           <h1>Task Manager</h1>
         </header>
 
+        {/* form for adding/editing tasks */}
         <form id="task-form" onSubmit={handleSubmit}>
             <input
               type="text"

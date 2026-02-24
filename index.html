@@ -1,12 +1,38 @@
+<!-- saying this is an HTML file -->
 <!doctype html>
+<!-- set the language to english -->
 <html lang="en">
+  <!-- head: contains meta/data information about the HTML document -->
   <head>
+    <!-- meta: specifies metadata about the HTML document -->
+    <!--
+      set the character encoding to UTF-8
+      UTF-8: unicode transformation format with 8-bit encoding;
+        is character encoding that represents characters from almost all
+        languages in the world, using 8 bits (1 byte) for each character
+    -->
     <meta charset="UTF-8" />
+
+    <!--
+      viewport: controls the layout on mobile browsers
+      width: sets the page width to the device
+      initial-scale: sets the initial zoom level
+    -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- title: specifies the title of the HTML document in the browser tab title -->
     <title>my_task2_proejct</title>
   </head>
+
+  <!-- body: the main content area of the HTML document -->
   <body>
+    <!-- div: a generic container element, groups elements together -->
+    <!-- this div will be the root element for our React application -->
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- script: used to include JavaScript code -->
+    <!-- src: specifies the path to the JavaScript file -->
+    <!-- defer: load the script then fully parse the HTML and create DOM fully then run script -->
+    <script type="module" src="/src/main.tsx" defer></script>
   </body>
 </html>
